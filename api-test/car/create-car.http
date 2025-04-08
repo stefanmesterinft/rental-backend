@@ -1,11 +1,11 @@
 POST http://localhost:8080/cars
 Content-Type: application/json
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QzQHRlc3QudGVzdCIsImV4cCI6MTc0NDAyNjA3NywidXNlcklkIjozfQ.FwC8kdtTtNANB45Vm6LQuobZcH4y-Gv0zNEGzOjg7OI
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3Q0QHRlc3QudGVzdCIsImV4cCI6MTc0NDEyNzYwMiwidXNlcklkIjoxfQ.5AjyfarMPqHdYy1ERTvQWbZmNzaR3M1ds3ARmxFeIB4
 
 {
     "Make": "Mercedes",     
-	"Model": "C",    
-	"Year": 2021,    
+	"Model": "E",    
+	"Year": 2013,    
 	"Location": "Oradea",
-	"Price": 300
+	"Price": 310
 }

@@ -52,7 +52,6 @@ func ApplyCarFilters(query *gorm.DB, filters models.CarFilters) *gorm.DB {
 	if err != nil {
 		fmt.Printf("Error marshaling filters to JSON: %v", err)
 	} else {
-		// fmthează parametrii sub formă de JSON
 		fmt.Printf("Applying filters: %s", filtersJson)
 	}
 
@@ -63,6 +62,8 @@ func ApplyCarFilters(query *gorm.DB, filters models.CarFilters) *gorm.DB {
 
 		switch v := value.(type) {
 		case string:
+			fmt.Println(v)
+			fmt.Println(v != "")
 			if v != "" {
 				query = query.Where(fmt.Sprintf("cars.%s = ?", field.Name), v)
 				query = query.Debug()
