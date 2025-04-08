@@ -1,0 +1,11 @@
+POST http://localhost:8080/cars
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QzQHRlc3QudGVzdCIsImV4cCI6MTc0NDAyNjA3NywidXNlcklkIjozfQ.FwC8kdtTtNANB45Vm6LQuobZcH4y-Gv0zNEGzOjg7OI
+
+{
+    "Make": "Mercedes",     
+	"Model": "C",    
+	"Year": 2021,    
+	"Location": "Oradea",
+	"Price": 300
+}

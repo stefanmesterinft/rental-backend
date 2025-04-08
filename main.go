@@ -1,16 +1,15 @@
 package main
 
 import (
-	"example.com/rest-api/db"
-	"example.com/rest-api/routes"
-	"github.com/gin-gonic/gin"
+	"rental.com/api/db"
+	"rental.com/api/routes"
 )
 
 func main() {
-	db.InitDB()
-	server := gin.Default()
+	dsn := "postgres://postgres:insightft@localhost:5433/car-rental"
+	dbInstance := db.InitDB(dsn)
 
-	routes.RegisterRoutes(server)
+	r := routes.SetupRoutes(dbInstance)
 
-	server.Run(":8080") // localgost:8080
+	r.Run(":8080")
 }

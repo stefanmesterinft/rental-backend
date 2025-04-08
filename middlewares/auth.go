@@ -3,8 +3,8 @@ package middlewares
 import (
 	"net/http"
 
-	"example.com/rest-api/utils"
 	"github.com/gin-gonic/gin"
+	"rental.com/api/utils"
 )
 
 func Authenticate(context *gin.Context) {
