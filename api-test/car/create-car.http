@@ -1,10 +1,10 @@
 POST http://localhost:8080/cars
 Content-Type: application/json
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3Q0QHRlc3QudGVzdCIsImV4cCI6MTc0NDEyNzYwMiwidXNlcklkIjoxfQ.5AjyfarMPqHdYy1ERTvQWbZmNzaR3M1ds3ARmxFeIB4
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3Q0QHRlc3QudGVzdCIsImV4cCI6MTc0NDE4NjU2MCwidXNlcklkIjo0fQ.wA9IL1hRf_g9bzRzWrRhAuDo4YNJsonh0byhKPYL370
 
 {
-    "Make": "Mercedes",     
-	"Model": "E",    
+    "Make": "Audi",     
+	"Model": "A4",    
 	"Year": 2013,    
 	"Location": "Oradea",
 	"Price": 310

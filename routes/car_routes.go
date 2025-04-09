@@ -12,5 +12,6 @@ func RegisterCarRoutes(router *gin.Engine) {
 
 	carGroup.POST("/", handlers.CreateCar)
 	carGroup.GET("/", handlers.GetAllCars)
-	// alte rute: /cars/:id, PUT, DELETE etc.
+	carGroup.DELETE("/:id", handlers.DeleteCar)
+
 }

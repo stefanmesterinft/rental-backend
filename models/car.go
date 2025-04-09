@@ -7,7 +7,16 @@ type Car struct {
 	Year     int64  `json:"year" binding:"required"`
 	Location string `json:"location" binding:"required"`
 	Price    int64  `json:"price" binding:"required"`
-	UserID   int64  `json:"user"`
+	UserID   int64  `gorm:"column:user_id"`
+	User     User   `gorm:"foreignKey:UserID"`
+}
+
+type CarUpdate struct {
+	Make     string `json:"make" binding:"required"`
+	Model    string `json:"model" binding:"required"`
+	Year     int64  `json:"year" binding:"required"`
+	Location string `json:"location" binding:"required"`
+	Price    int64  `json:"price" binding:"required"`
 }
 
 type CarFilters struct {
@@ -21,5 +30,5 @@ type CarFilters struct {
 type CarQueryParams struct {
 	Filters    CarFilters `form:"filters"`
 	Pagination Pagination `form:"pagination"`
-	Sort       Sort       `form:"sort"`
+	Sort       []string   `form:"sort[]"`
 }

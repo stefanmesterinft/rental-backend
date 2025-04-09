@@ -1,3 +1,3 @@
-GET http://localhost:8080/cars?&location=Oradea&page=1&pageSize=10&sort[]=make:desc&sort[]=year:desc
+DELETE http://localhost:8080/cars/6
 Content-Type: application/json
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3Q0QHRlc3QudGVzdCIsImV4cCI6MTc0NDIwNTU2MiwidXNlcklkIjo0fQ.KSTBPu03piZjbY2TfJQ8s1mqeAxvmWvFqn55okTXvQc

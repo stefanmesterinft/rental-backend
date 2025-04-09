@@ -1,9 +1,9 @@
 package repositories
 
 import (
-	"encoding/json"
 	"fmt"
 	"reflect"
+	"strings"
 
 	"gorm.io/gorm"
 	"rental.com/api/db"
@@ -15,13 +15,24 @@ func Save(car *models.Car) error {
 	return result.Error
 }
 
-func GetAllCars(params models.CarQueryParams) ([]models.Car, int64, error) {
+func Update(car *models.Car) error {
+	result := db.DB.Save(car)
+	return result.Error
+}
+
+func Delete(car *models.Car) error {
+	result := db.DB.Delete(car)
+	return result.Error
+}
+
+func GetAll(params models.CarQueryParams) ([]models.Car, int64, error) {
 	var cars []models.Car
 	var totalCount int64
 
-	fmt.Print(params)
+	query := db.DB.Model(&models.Car{}).
+		// Joins("LEFT JOIN users ON users.id = cars.user_id"). // in caz ca e nevoie de sortare dupa user
+		Preload("User")
 
-	query := db.DB.Model(&models.Car{}).Joins("LEFT JOIN users ON users.id = cars.user_id")
 	query = ApplyCarFilters(query, params.Filters)
 	query = ApplyCarSort(query, params.Sort)
 
@@ -29,8 +40,6 @@ func GetAllCars(params models.CarQueryParams) ([]models.Car, int64, error) {
 	if err != nil {
 		return nil, 0, fmt.Errorf("Error fetching total count: %v", err)
 	}
-
-	fmt.Print(query)
 
 	err = query.Limit(params.Pagination.PageSize).Offset((params.Pagination.Page - 1) * params.Pagination.PageSize).Find(&cars).Error
 	if err != nil {
@@ -47,14 +56,6 @@ func FindByUserID(userID int64) ([]models.Car, error) {
 }
 
 func ApplyCarFilters(query *gorm.DB, filters models.CarFilters) *gorm.DB {
-
-	filtersJson, err := json.Marshal(filters)
-	if err != nil {
-		fmt.Printf("Error marshaling filters to JSON: %v", err)
-	} else {
-		fmt.Printf("Applying filters: %s", filtersJson)
-	}
-
 	val := reflect.ValueOf(filters)
 	for i := 0; i < val.NumField(); i++ {
 		field := val.Type().Field(i)
@@ -62,30 +63,32 @@ func ApplyCarFilters(query *gorm.DB, filters models.CarFilters) *gorm.DB {
 
 		switch v := value.(type) {
 		case string:
-			fmt.Println(v)
-			fmt.Println(v != "")
 			if v != "" {
 				query = query.Where(fmt.Sprintf("cars.%s = ?", field.Name), v)
-				query = query.Debug()
 
 			}
-		case int, int64:
-			if v != 0 {
-				query = query.Where(fmt.Sprintf("cars.%s = ?", field.Name), v)
-				query = query.Debug()
+		case int64:
+			if value != int64(0) {
+				query = query.Where(fmt.Sprintf("cars.%s = ?", field.Name), value)
 			}
 		default:
 			continue
 		}
 	}
 
-	query = query.Debug()
-
 	return query
 }
 
-func ApplyCarSort(query *gorm.DB, sort models.Sort) *gorm.DB {
-	for field, order := range sort {
+func ApplyCarSort(query *gorm.DB, sort []string) *gorm.DB {
+	for _, s := range sort {
+		parts := strings.Split(s, ":")
+		if len(parts) != 2 {
+			continue // ignori valorile incorecte
+		}
+
+		field := parts[0]
+		order := strings.ToLower(parts[1])
+
 		if order == "asc" || order == "desc" {
 			query = query.Order(fmt.Sprintf("cars.%s %s", field, order))
 		}
