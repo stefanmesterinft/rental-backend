@@ -16,7 +16,6 @@ type CarFilters struct {
 	Location string `form:"location"`
 	Price    int64  `form:"price"`
 	Year     int64  `form:"year"`
-	UserId   int64  `form:"user_id"`
 }
 
 type CarQueryParams struct {
